@@ -7,6 +7,9 @@ export default (postsReducer = [], action) => {
         case "CREATE":
             return [...postsReducer, action.payload];
 
+        case "UPDATE":
+            return postsReducer.map((post) => post._id == action.payload._id ? action.payload : post)
+
         default:
             return postsReducer;
     }
