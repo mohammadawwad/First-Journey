@@ -12,7 +12,7 @@ import App from "./App";
 const store = createStore(reducers, compose(applyMiddleware(thunk)))
 
 ReactDOM.render(
-
+    //test commit idk if i broke it
     <Provider store={store}>
         <App />
     </Provider>,
