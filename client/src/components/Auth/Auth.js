@@ -7,7 +7,7 @@ import{GoogleLogin} from "react-google-login";
 import Icon from "./Icon";
 import {useDispatch} from "react-redux";
 import {useHistory} from "react-router-dom";
-import {signIn, signUp} from "../../actions/auth"
+import {signIn, signUp} from "../../actions/authAction";
 
 const initialState = {firstName: "", lastName: "", email: "", password: "", confirmPassword: ""};
 
