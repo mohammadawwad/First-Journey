@@ -1,6 +1,6 @@
 import express from "express";
 import {getPosts, createPost, updatePost, deletePost, likePost} from "../controllers/postsController.js";
-import authMidWare from "../middlewar/authMidware.js";
+import authMidware from "../middleware/authMidware.js";
 
 const router = express.Router();
 
