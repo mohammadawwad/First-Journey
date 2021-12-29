@@ -17,7 +17,7 @@ export const getPosts = async (req, res) => {
 export const createPost = async (req, res) => {
     const post = req.body;
 
-    const newPost = new PostMessage(post);
+    const newPost = new PostMessage({...post, creator: req.userId, createdAt: new Date().toISOString()});
 
     try{
         await newPost.save();
@@ -34,7 +34,7 @@ export const updatePost = async (req, res) => {
     
     //checks if id is valid
     if(!mongoose.Types.ObjectId.isValid(_id)){
-        return res.status(404).send("No post with that Id");
+        return res.status(404).send("No post with that Id.");
     }
 
     const updatedPost = await PostMessage.findByIdAndUpdate(_id, {...post, _id}, {new: true});
@@ -57,9 +57,8 @@ export const deletePost = async(req, res) => {
 }
 
 //post liker
-export const likePost = async (req,res) => {
-    const {id} = req.params
-
+export const likePost = async (req, res) => {
+    const {id} = req.params;
     //user not authenticated
     if(!req.userId){
         return res.json({message: "Not Authenticated"})
@@ -67,25 +66,25 @@ export const likePost = async (req,res) => {
 
     //checks if id is valid
     if(!mongoose.Types.ObjectId.isValid(id)){
-        return res.status(404).send("No post with that Id");
+        return res.status(404).send("No post with that Id... " + id);
     }
 
     const post = await PostMessage.findById(id);
 
     //loops thru all id's to check if you already liked the specific post
-    const index = post.likes.findIndex((id) => String(req.userId));
+    const index = post.likes.findIndex((id) => id === String(req.userId));
 
     //hasnt liked yet 
-    if(index == -1){
+    if(index === -1){
         post.likes.push(req.userId);
     }
     else{
         //dislike post
-        post.likes = post.like.filter((id) => id != String(req.userId));
+        post.likes = post.likes.filter((id) => id !== String(req.userId));
     }
 
     //updateing post
-    const updatedPost = await PostMessage.findByIdAndUpdate(id, {likeCount: post.likeCount + 1}, {new: true});
+    const updatedPost = await PostMessage.findByIdAndUpdate(id, post, {new: true});
 
-    res.json(updatedPost);
+    res.status(200).json(updatedPost);
 }

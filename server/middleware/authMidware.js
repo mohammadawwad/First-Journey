@@ -12,13 +12,14 @@ import jwt from "jsonwebtoken";
 const authMidware = async(req, res, next) => {
     try{
         //check to see if the user is who they claim to be
-        const token = req.headers.Authorization.split(" ")[1];
+        
+        const token = req.headers.authorization.split(" ")[1];
         const isCustomAuth = token.length < 500; 
 
         let decodedData;
 
         //gets user id if its our own token
-        if(tokken && isCustomAuth){
+        if(token && isCustomAuth){
             decodedData = jwt.verify(token, "test");
             req.userId = decodedData?.id;
         }
