@@ -7,6 +7,9 @@ import{GoogleLogin} from "react-google-login";
 import Icon from "./Icon";
 import {useDispatch} from "react-redux";
 import {useHistory} from "react-router-dom";
+import {signIn, signUp} from "../../actions/auth"
+
+const initialState = {firstName: "", lastName: "", email: "", password: "", confirmPassword: ""};
 
 const Auth = () => {
     const classes = useStyles();
@@ -14,12 +17,26 @@ const Auth = () => {
     const [showPassword, setShowPassword] = useState(false);
     const dispatch = useDispatch();
     const history = useHistory();
+    const [formData, setFormData] = useState(initialState);
 
-    const handleSubmit = () => {
 
+    const handleChange = (e) => {
+        //only changes current input field
+        setFormData({...formData, [e.target.name]: e.target.value})
     }
 
-    const handleChange = () => {
+    const handleSubmit = (e) => {
+        e.preventDefault();
+
+        //Sign Up
+        if(isSignedUp){
+            dispatch(signUp(formData, history));
+        }
+
+        //Sign In
+        else{
+            dispatch(signIn(formData, history));
+        }
 
     }
 
