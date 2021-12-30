@@ -44,7 +44,6 @@ export const updatePost = async (req, res) => {
 //post deleter
 export const deletePost = async(req, res) => {
     const {id} = req.params;
-    console.log(req.params)
 
     //checks if id is valid
     if(!mongoose.Types.ObjectId.isValid(id)){
@@ -59,7 +58,7 @@ export const deletePost = async(req, res) => {
 //post liker
 export const likePost = async (req, res) => {
     const {id} = req.params;
-    console.log(req.userId)
+
     //user not authenticated
     if(!req.userId){
         return res.json({message: "Not Authenticated"})
