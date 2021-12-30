@@ -16,7 +16,6 @@ export const getPosts = async (req, res) => {
 //post creator
 export const createPost = async (req, res) => {
     const post = req.body;
-
     const newPost = new PostMessage({...post, creator: req.userId, createdAt: new Date().toISOString()});
 
     try{
@@ -29,22 +28,23 @@ export const createPost = async (req, res) => {
 
 //posts/123 <- id
 export const updatePost = async (req, res) => {
-    const {id: _id} = req.params;
-    const post = req.body;
+    const { id } = req.params;
     
-    //checks if id is valid
-    if(!mongoose.Types.ObjectId.isValid(_id)){
-        return res.status(404).send("No post with that Id.");
-    }
+    const { title, message, creator, selectedFile, tags } = req.body;
+    
+    if (!mongoose.Types.ObjectId.isValid(id)) return res.status(404).send(`No post with id: ${id}`);
 
-    const updatedPost = await PostMessage.findByIdAndUpdate(_id, {...post, _id}, {new: true});
+    const updatedPost = { creator, title, message, tags, selectedFile, _id: id };
+
+    await PostMessage.findByIdAndUpdate(id, updatedPost, { new: true });
 
     res.json(updatedPost);
 }
 
 //post deleter
 export const deletePost = async(req, res) => {
-    const {id} = req.params
+    const {id} = req.params;
+    console.log(req.params)
 
     //checks if id is valid
     if(!mongoose.Types.ObjectId.isValid(id)){
@@ -59,6 +59,7 @@ export const deletePost = async(req, res) => {
 //post liker
 export const likePost = async (req, res) => {
     const {id} = req.params;
+    console.log(req.userId)
     //user not authenticated
     if(!req.userId){
         return res.json({message: "Not Authenticated"})
@@ -80,6 +81,7 @@ export const likePost = async (req, res) => {
     }
     else{
         //dislike post
+        //loops thru all id's and removes the id from the array of likes
         post.likes = post.likes.filter((id) => id !== String(req.userId));
     }
 

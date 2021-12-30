@@ -24,6 +24,7 @@ const authMidware = async(req, res, next) => {
             req.userId = decodedData?.id;
         }
         else{
+            //sub is googles way of id's
             decodedData = jwt.decode(token);
             req.userId = decodedData?.sub;
         }

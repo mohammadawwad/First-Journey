@@ -37,7 +37,6 @@ const Auth = () => {
         else{
             dispatch(signIn(formData, history));
         }
-
     }
 
     const handleShowPassword = () => {

@@ -1,4 +1,4 @@
-import * as api from "../api";
+import * as api from "../api/index.js";
 import {LIKE, DELETE, CREATE, UPDATE, FETCH_ALL} from "../constants/actionTypes"
 
 //action creators (functions that create action)
@@ -16,6 +16,7 @@ export const getPosts = () => async (dispatch) => {
     }
 }
 
+//idk if we need this 
 export const createPost = (post) => async (dispatch) => {
     try {
         const {data} = await api.createPost(post);
