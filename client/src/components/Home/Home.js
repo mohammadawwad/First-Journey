@@ -8,6 +8,7 @@ import useStyles from "./styles";
 import Paging from "../Paging/Paging";
 import {useHistory, useLocation} from "react-router-dom";
 import ChipInput from "material-ui-chip-input";
+import {getPosts, getPostsBySearch} from "../../actions/posts"
 
 
 const useQuery = () => {
@@ -48,7 +49,8 @@ const Home = () => {
 
     const searchPost = () => {
         if(searchTitle.trim()){
-            //dispatch to fetch our search post
+            //dispatch to fetch our search post [europe, usa] -> "europe,usa"
+            dispatch(getPostsBySearch({search, tags: tags.join(",")}))
         } else {
             history.push("/");
         }

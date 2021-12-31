@@ -16,6 +16,7 @@ API.interceptors.request.use((req) => {
 // const url = "https://first-journey.herokuapp.com/posts";
 
 export const fetchPosts = () => API.get("/posts");
+export const fetchPostsBySearch = (searchQuery) => API.get(`/posts/search?searchQuery=${searchQuery || "none"}&tags=${searchQuery.tags}`);
 export const createPost = (newPost) => API.post("/posts", newPost);
 export const updatePost = (id, updatedPost) => API.patch(`/posts/${id}`, updatedPost);
 export const deletePost = (id) => API.delete(`/posts/${id}`);
@@ -24,3 +25,4 @@ export const likePost = (id) => API.patch(`/posts/${id}/likePost`);
 //authentication end points
 export const signIn = (formData) => API.post("/user/signin", formData);
 export const signUp = (formData) => API.post("/user/signup", formData);
+
