@@ -13,6 +13,23 @@ export const getPosts = async (req, res) => {
     }
 }
 
+
+//query --> /posts?page=1 -> page = 1       IF U WANT TO QUERY DATA (SEARCH)
+//params -> posts/:id(123) -> id = 123      IF U WANT TO FIND THE ID OF THE POST
+export const getPostsBySearch = async (req, res) => {
+    const {searchQuery, tags} = req.query;
+
+    try{
+        //"i" stands for ignore case Test TEST test
+        const title = new RegExp(searchQuery, "i");
+        //$or means search for either title or tags                         $in searches for tags in our query
+        const postMessages = await PostMessage.find({$or: [{title}, {tags: {$in: tags.split(",")}}]});
+        res.status({data: postMessages});
+    } catch (error){
+        res.status(404).json({message: error.message});
+    }
+}
+
 //post creator
 export const createPost = async (req, res) => {
     const post = req.body;

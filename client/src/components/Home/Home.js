@@ -3,12 +3,11 @@ import {Container, Grow, Grid, Paper, AppBar, TextField, Button} from "@material
 import Posts from "../Posts/Posts";
 import Form from "../Form/Form";
 import {useDispatch} from "react-redux"
-import {getPosts} from "../../actions/postsAction"
 import useStyles from "./styles";
 import Paging from "../Paging/Paging";
 import {useHistory, useLocation} from "react-router-dom";
 import ChipInput from "material-ui-chip-input";
-import {getPosts, getPostsBySearch} from "../../actions/posts"
+import {getPosts, getPostsBySearch} from "../../actions/postsAction"
 
 
 const useQuery = () => {
@@ -48,9 +47,9 @@ const Home = () => {
     }
 
     const searchPost = () => {
-        if(searchTitle.trim()){
+        if(searchTitle.trim() || tags){
             //dispatch to fetch our search post [europe, usa] -> "europe,usa"
-            dispatch(getPostsBySearch({search, tags: tags.join(",")}))
+            dispatch(getPostsBySearch({searchTitle, tags: tags.join(",")}))
         } else {
             history.push("/");
         }

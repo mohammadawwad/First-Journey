@@ -2,7 +2,7 @@ import axios from "axios";
 import { parse } from "ipaddr.js";
 
 //axios instance
-const API = axios.create({baseURL: "https://first-journey.herokuapp.com"});
+const API = axios.create({baseURL: "http://localhost:5000"});
 
 //middleware
 API.interceptors.request.use((req) => {
