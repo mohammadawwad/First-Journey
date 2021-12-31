@@ -1,9 +1,12 @@
-import {LIKE, DELETE, CREATE, UPDATE, FETCH_ALL} from "../constants/actionTypes"
+import {LIKE, DELETE, CREATE, UPDATE, FETCH_ALL, FETCH_BY_SEARCH} from "../constants/actionTypes"
 
 export default (postsReducer = [], action) => {
     switch(action.type){
         case FETCH_ALL:
             //return actual posts
+            return action.payload;
+
+        case FETCH_BY_SEARCH: 
             return action.payload;
         
         case CREATE:

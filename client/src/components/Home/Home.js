@@ -11,7 +11,7 @@ import {getPosts, getPostsBySearch} from "../../actions/postsAction"
 
 
 const useQuery = () => {
-    return new URLSearchParams(useLocation().search);
+    return new URLSearchParams(useLocation().searchTitle);
 }
 
 
@@ -49,7 +49,8 @@ const Home = () => {
     const searchPost = () => {
         if(searchTitle.trim() || tags){
             //dispatch to fetch our search post [europe, usa] -> "europe,usa"
-            dispatch(getPostsBySearch({searchTitle, tags: tags.join(",")}))
+            dispatch(getPostsBySearch({searchTitle, tags: tags.join(",")}));
+            history.push(`/posts/searchTitle?searchQuery=${searchTitle || "none"}&tags=${tags.join(",")}`);
         } else {
             history.push("/");
         }
