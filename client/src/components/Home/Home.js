@@ -10,8 +10,8 @@ import ChipInput from "material-ui-chip-input";
 import {getPosts, getPostsBySearch} from "../../actions/postsAction"
 
 
-const useQuery = () => {
-    return new URLSearchParams(useLocation().searchTitle);
+const useQuery = () => { ///Search or searchTitle
+    return new URLSearchParams(useLocation().search);
 }
 
 
