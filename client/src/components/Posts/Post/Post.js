@@ -8,11 +8,14 @@ import MoreHorizIcon from "@material-ui/icons/MoreHoriz"
 import moment from "moment";
 import {useDispatch} from "react-redux";
 import {deletePost, likePost} from "../../../actions/postsAction";
+import Filter from "bad-words";
+import Profanity from "./Profanity.json";
 
 const Post = ({post, setCurrentId}) => {
     const classes = useStyles();
     const dispatch = useDispatch();
     const user = JSON.parse(localStorage.getItem('profile'));
+    const filter = new Filter();  //profanity filter
 
     const Likes = () => {
         if (post.likes.length > 0) {
@@ -26,6 +29,10 @@ const Post = ({post, setCurrentId}) => {
     
         return <><ThumbUpAltOutlined fontSize="small" />&nbsp;Like</>;
     };
+
+    //Profanity Words
+    let badWords = ['shit'];
+    filter.addWords(...badWords);
 
     return(
         <Card className={classes.card}>
@@ -57,7 +64,7 @@ const Post = ({post, setCurrentId}) => {
 
             {/* Body */}
             <CardContent>
-                <Typography varient="body2" color="textSecondary" component="p">{post.message}</Typography>
+                <Typography varient="body2" color="textSecondary" component="p">{filter.clean(post.message)}</Typography>
             </CardContent>
 
             {/* Like and Delete*/}
@@ -77,6 +84,7 @@ const Post = ({post, setCurrentId}) => {
             </CardActions>
         </Card>
     );
+
 }
 
 export default Post;
