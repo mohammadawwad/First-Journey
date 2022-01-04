@@ -1,5 +1,5 @@
 import express from "express";
-import {getPosts, getPostsBySearch, createPost, updatePost, deletePost, likePost} from "../controllers/postsController.js";
+import {getPosts, getPostsBySearch, createPost, updatePost, deletePost, likePost, getPost} from "../controllers/postsController.js";
 import authMidware from "../middleware/authMidware.js";
 
 const router = express.Router();
@@ -7,6 +7,7 @@ const router = express.Router();
 //if it says authMidware it checks for perms then does what it needs to do
 //all begine with /posts but u cant see it here
 
+router.get('/:id', getPost);
 router.get('/', getPosts);
 router.get('/search', getPostsBySearch);
 router.post('/', authMidware, createPost);

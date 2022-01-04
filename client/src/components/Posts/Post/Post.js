@@ -1,6 +1,6 @@
 import React from "react";
 import useStyles from "./styles";
-import {Card, CardActions, CardContent, CardMedia, Button, Typography} from "@material-ui/core";
+import {Card, CardActions, CardContent, CardMedia, Button, ButtonBase, Typography} from "@material-ui/core";
 import ThumbUpAltIcon from "@material-ui/icons/ThumbUpAlt";
 import ThumbUpAltOutlined from '@material-ui/icons/ThumbUpAltOutlined';
 import DeleteIcon from "@material-ui/icons/Delete";
@@ -10,12 +10,14 @@ import {useDispatch} from "react-redux";
 import {deletePost, likePost} from "../../../actions/postsAction";
 import Filter from "bad-words";
 import Profanity from "./Profanity.json";
+import {useHistory} from "react-router-dom";
 
 const Post = ({post, setCurrentId}) => {
     const classes = useStyles();
     const dispatch = useDispatch();
     const user = JSON.parse(localStorage.getItem('profile'));
     const filter = new Filter();  //profanity filter
+    const history = useHistory();
 
     const Likes = () => {
         if (post.likes.length > 0) {
@@ -30,42 +32,57 @@ const Post = ({post, setCurrentId}) => {
         return <><ThumbUpAltOutlined fontSize="small" />&nbsp;Like</>;
     };
 
+    const openPost = () => {
+        history.push(`/posts/${post._id}`)
+    };
+
     //Profanity Words
-    let badWords = ['shit'];
+    let badWords = ['poop', 'garbage'];
     filter.addWords(...badWords);
 
     return(
         <Card className={classes.card}>
-            {/* Image */}
-            <CardMedia className={classes.media} image={post.selectedFile} title={post.title} />
+            <ButtonBase className={classes.cardAction} onClick={openPost}>
 
-            {/* Creator */}
-            <div className={classes.overlay}>
-                <Typography varient="h6">{post.name}</Typography>
-                <Typography varient="body2">{moment(post.createdAt).fromNow()}</Typography>
-            </div>
+                {/* Image */}
+                <CardMedia className={classes.media} image={post.selectedFile} title={post.title} />
 
-            {/* Edit that onlt creator can change*/}
-            {(user?.result?.googleId === post?.creator || user?.result?._id === post?.creator) && (
-                <div className={classes.overlay2}>
-                    <Button style={{color: "white"}} size="small" onClick={() => setCurrentId(post._id)}>
-                        <MoreHorizIcon frontSize="default" />
-                    </Button>
+                {/* Creator */}
+                <div className={classes.overlay}>
+                    <Typography varient="h6">{post.name}</Typography>
+                    <Typography varient="body2">{moment(post.createdAt).fromNow()}</Typography>
                 </div>
-            )}
 
-            {/* Tags */}
-            <div className={classes.details}>
-                <Typography varient="body2" color={"textSecondary"}>{post.tags.map((tag) => `#${tag} `)}</Typography>
-            </div>
+                {/* Edit that onlt creator can change*/}
+                {(user?.result?.googleId === post?.creator || user?.result?._id === post?.creator) && (
+                    <div className={classes.overlay2} name="edit">
+                    <Button
+                      onClick={(e) => {
+                        e.stopPropagation();
+                        setCurrentId(post._id);
+                      }}
+                      style={{ color: 'white' }}
+                      size="small"
+                    >
+                      <MoreHorizIcon fontSize="default" />
+                    </Button>
+                  </div>
+                )}
 
-            {/* Title */}
-            <Typography className={classes.title} varient="h5" gutterBottom>{post.title}</Typography>
+                {/* Tags */}
+                <div className={classes.details}>
+                    <Typography varient="body2" color={"textSecondary"}>{post.tags.map((tag) => `#${tag} `)}</Typography>
+                </div>
 
-            {/* Body */}
-            <CardContent>
-                <Typography varient="body2" color="textSecondary" component="p">{filter.clean(post.message)}</Typography>
-            </CardContent>
+                {/* Title */}
+                <Typography className={classes.title} varient="h5" gutterBottom>{post.title}</Typography>
+
+                {/* Body filter.clean(msg) */}
+                <CardContent>
+                    <Typography varient="body2" color="textSecondary" component="p">{post.message}</Typography>
+                </CardContent>
+
+            </ButtonBase>
 
             {/* Like and Delete*/}
             <CardActions className={classes.cardActions}>

@@ -27,9 +27,9 @@ const Home = () => {
     const [search, setsearch] = useState("");
     const [tags, setTags] = useState([]);
 
-    useEffect(() => {
-        dispatch(getPosts());
-    }, [currentId, dispatch]);
+    // useEffect(() => {
+    //     dispatch(getPosts());
+    // }, [currentId, dispatch]);
 
     const handleKeyPress = (e) => {
         if(e.keyCode == 13){
