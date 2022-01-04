@@ -3,11 +3,13 @@ import {LIKE, DELETE, CREATE, UPDATE, FETCH_ALL, FETCH_BY_SEARCH} from "../const
 
 //action creators (functions that create action)
 
-export const getPosts = () => async (dispatch) => {
+export const getPosts = (page) => async (dispatch) => {
 
     //data represents posts
     try{
-        const {data} = await api.fetchPosts();
+        const {data} = await api.fetchPosts(page);
+
+        console.log(data);
 
         //same as return
         dispatch({type: FETCH_ALL, payload: data});

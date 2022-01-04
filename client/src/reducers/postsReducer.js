@@ -1,26 +1,34 @@
 import {LIKE, DELETE, CREATE, UPDATE, FETCH_ALL, FETCH_BY_SEARCH} from "../constants/actionTypes"
 
-export default (postsReducer = [], action) => {
+export default (state = [], action) => {
     switch(action.type){
         case FETCH_ALL:
             //return actual posts
-            return action.payload;
+            return {
+                ...state, 
+                posts: action.payload.data,
+                currentPage: action.payload.currentPage,
+                numberOfPages: action.payload.numberOfPages,
+            };
 
         case FETCH_BY_SEARCH: 
-            return action.payload;
+            return {
+                ...state,
+                posts: action.payload,
+            };
         
         case CREATE:
-            return [...postsReducer, action.payload];
+            return [...state, action.payload];
 
         //under eachother means both do the same
         case UPDATE:
         case LIKE:
-            return postsReducer.map((post) => post._id == action.payload._id ? action.payload : post);
+            return state.map((post) => post._id == action.payload._id ? action.payload : post);
 
         case DELETE:
-            return postsReducer.filter((post) => post._id != action.payload);
+            return state.filter((post) => post._id != action.payload);
 
         default:
-            return postsReducer;
+            return state;
     }
 }

@@ -8,7 +8,7 @@ const router = express.Router();
 //all begine with /posts but u cant see it here
 
 router.get('/', getPosts);
-router.get('/searchTitle', getPostsBySearch);
+router.get('/search', getPostsBySearch);
 router.post('/', authMidware, createPost);
 //patch is used for updating existing docs
 router.patch("/:id", authMidware, updatePost);

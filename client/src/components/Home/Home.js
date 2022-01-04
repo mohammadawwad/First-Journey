@@ -24,7 +24,7 @@ const Home = () => {
     const page = query.get("page") || 1;
     const searchQuery = query.get("searchQuery");
     const [currentId, setCurrentId] = useState(null);
-    const [searchTitle, setSearchTitle] = useState("");
+    const [search, setsearch] = useState("");
     const [tags, setTags] = useState([]);
 
     useEffect(() => {
@@ -47,10 +47,10 @@ const Home = () => {
     }
 
     const searchPost = () => {
-        if(searchTitle.trim() || tags){
+        if(search.trim() || tags){
             //dispatch to fetch our search post [europe, usa] -> "europe,usa"
-            dispatch(getPostsBySearch({searchTitle, tags: tags.join(",")}));
-            history.push(`/posts/searchTitle?searchQuery=${searchTitle || "none"}&tags=${tags.join(",")}`);
+            dispatch(getPostsBySearch({search, tags: tags.join(",")}));
+            history.push(`/posts/search?searchQuery=${search || "none"}&tags=${tags.join(",")}`);
         } else {
             history.push("/");
         }
@@ -66,7 +66,7 @@ const Home = () => {
 
                     <Grid item xs={12} sm={6} md={3}>
                         <AppBar className={classes.appBarSearch} position="static" color="inherit">
-                            <TextField name="search" variant="outlined" label="Search Journies" fullWidth value={searchTitle} onKeyPress={handleKeyPress} onChange={(e) => setSearchTitle(e.target.value)} />
+                            <TextField name="search" variant="outlined" label="Search Journies" fullWidth value={search} onKeyPress={handleKeyPress} onChange={(e) => setsearch(e.target.value)} />
                             <ChipInput style={{margin: "10px 0"}} value={tags} onAdd={handleAdd} onDelete={handleDelete} label="Search Tags" variant="outlined" />
                             <Button onClick={searchPost} className={classes.searchButton} variant="contained" color="primary">Search Posts</Button>
                         </AppBar>
@@ -74,7 +74,7 @@ const Home = () => {
                         <Form currentId={currentId} setCurrentId={setCurrentId}/>
 
                         <Paper elevation={6}>
-                            <Paging />
+                            <Paging page={page}/>
                         </Paper>
                     </Grid>
                 </Grid>
