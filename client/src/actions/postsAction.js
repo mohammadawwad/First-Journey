@@ -1,5 +1,5 @@
 import * as api from "../api/index.js";
-import {LIKE, DELETE, CREATE, UPDATE, FETCH_ALL, FETCH_BY_SEARCH} from "../constants/actionTypes"
+import {LIKE, DELETE, CREATE, UPDATE, FETCH_ALL, FETCH_BY_SEARCH, START_LOADING, END_LOADING} from "../constants/actionTypes"
 
 //action creators (functions that create action)
 
@@ -7,12 +7,14 @@ export const getPosts = (page) => async (dispatch) => {
 
     //data represents posts
     try{
+        dispatch({type: START_LOADING});
         const {data} = await api.fetchPosts(page);
 
         console.log(data);
 
         //same as return
         dispatch({type: FETCH_ALL, payload: data});
+        dispatch({type: END_LOADING});
     } catch (error) {
         console.log(error);
     }
@@ -21,8 +23,10 @@ export const getPosts = (page) => async (dispatch) => {
 //getting posts by searching for them
 export const getPostsBySearch = (searchQuery) => async (dispatch) => {
     try{
+        dispatch({type: START_LOADING});
         const {data: {data}} = await api.fetchPostsBySearch(searchQuery);
         dispatch({type: FETCH_BY_SEARCH, payload: data});
+        dispatch({type: END_LOADING});
         console.log(data);
     } catch (error) {
         console.log(error);
