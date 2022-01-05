@@ -8,6 +8,7 @@ import {Grid, CircularProgress} from "@material-ui/core"
 const Posts = ({setCurrentId}) => {
     const classes = useStyles();
     const {posts, isLoading} = useSelector((state) => state.postsReducer);
+    console.log("POSTS: "+ posts);
 
     if(!posts.length && !isLoading){
         return "No Posts, would you like to be the first 😃"

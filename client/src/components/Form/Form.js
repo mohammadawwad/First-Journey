@@ -15,10 +15,12 @@ const Form = ({currentId, setCurrentId}) => {
         title: "", message: "", tags: "", selectedFile: ""
     });
 
-    const post = useSelector((state) => currentId ? state.postsReducer.posts.find((p) => p._id == currentId) : null);
+    const post = useSelector((state) => (currentId ? state.postsReducer.posts.find((p) => p._id == currentId) : null));
+    console.log("TTTTTTTTTTTTTTTTT: " + post);
     const dispatch = useDispatch();
 
     useEffect(() => {
+        if (!post?.title) clear();
         if(post) setPostData(post);
     }, [post])
 
@@ -27,17 +29,19 @@ const Form = ({currentId, setCurrentId}) => {
 
         if(currentId == 0){
             dispatch(createPost({...postData, name: user?.result?.name}, history));
+            clear();
         }
         else{
             dispatch(updatePost(currentId,{...postData, name: user?.result?.name}));
+            clear();
         }
 
-        clear();
+
     }
 
     const clear = () => {
         setCurrentId(0);
-        setPostData({title: "", message: "", tags: "", selectedFile: ""});
+        setPostData({title: "", message: "", tags: [], selectedFile: ""});
     }
 
     //no user loged in means cannot create a post

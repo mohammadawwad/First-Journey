@@ -7,23 +7,25 @@ import useStyles from "./styles";
 import {getPost, getPostsBySearch} from "../../actions/postsAction"
 
 const PostDetails = () => {
-    const {post, posts, isLoading} = useSelector((state => state.postsReducer));
+    const {post, posts, isLoading} = useSelector((state) => state.postsReducer);
     const dispatch = useDispatch();
     const history = useHistory();
     const classes = useStyles();
     const {id} = useParams();
+
+    console.log("PPPPPPPPP: " + post);
 
     //whenever the id of the post changes
     useEffect(() => {
         dispatch(getPost(id))
     }, [id]);
 
-    useEffect(() => {
-        if(post){
-            console.log("POST EXISTS");
-            dispatch(getPostsBySearch({search: "none", tags: post?.tags.join(",")}));
-        }
-    }, [post])
+    // useEffect(() => {
+    //     if(post){
+    //         console.log("POST EXISTS");
+    //         dispatch(getPostsBySearch({search: "none", tags: post?.tags.join(",")}));
+    //     }
+    // }, [post])
 
     if(!post){
         console.log("No Posts");
@@ -43,7 +45,7 @@ const PostDetails = () => {
     }
 
     //opend post wont be in recomended post
-    const recommendedPosts = posts.filter(({_id}) => _id != post._id);
+    // const recommendedPosts = posts.filter(({_id}) => _id != post._id);
 
     return (
         <Paper style={{padding: '20px', borderRadius: "15px"}} elevation={6}>
@@ -64,7 +66,7 @@ const PostDetails = () => {
                         <img className={classes.media} src={post.selectedFile || 'https://user-images.githubusercontent.com/194400/49531010-48dad180-f8b1-11e8-8d89-1e61320e1d82.png'} alt={post.title} />
                     </div>
             </div>
-            {recommendedPosts.length && (
+            {/* {recommendedPosts.length && (
                 <div className={classes.section}>
                     <Typography gutterButtom variant="h5" >You Might Also Like: </Typography>
                     <Divider />
@@ -81,7 +83,7 @@ const PostDetails = () => {
                         ))}
                     </div>
                 </div>
-            )}
+            )} */}
         </Paper>
 
         //Recomended Posts
@@ -89,4 +91,4 @@ const PostDetails = () => {
     )
 }
 
-export default PostDetails
+export default PostDetails;

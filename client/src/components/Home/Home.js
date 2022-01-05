@@ -23,7 +23,7 @@ const Home = () => {
     const history = useHistory();
     const page = query.get("page") || 1;
     const searchQuery = query.get("searchQuery");
-    const [currentId, setCurrentId] = useState(null);
+    const [currentId, setCurrentId] = useState(0);
     const [search, setsearch] = useState("");
     const [tags, setTags] = useState([]);
 
