@@ -9,6 +9,7 @@ import postRoutes from './routes/postsRoutes.js';
 import userRouter from "./routes/usersRoutes.js";
 
 const app = express();
+dotenv.config();
 
 app.use(express.json({ limit: '30mb', extended: true }))
 app.use(express.urlencoded({ limit: '30mb', extended: true }))
