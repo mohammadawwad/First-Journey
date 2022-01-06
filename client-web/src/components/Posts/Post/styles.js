@@ -21,6 +21,22 @@ export default makeStyles({
     height: '100%',
     position: 'relative',
   },
+  outerCase: { 
+    width: "100%",  
+    display: "flex",
+    justifyContent: "center",
+  },
+  popup: {
+    display: 'flex',
+    flexDirection: 'column',
+    justifyContent: 'center',
+    textAlign: "center",
+    borderRadius: '15px',
+    height: '100px',
+    position: 'relative',  
+    width: "80%",
+    margin: "0 auto",
+  },
   overlay: {
     position: 'absolute',
     top: '20px',

@@ -1,6 +1,6 @@
 import React, {useState} from "react";
 import useStyles from "./styles";
-import {Card, CardActions, CardContent, CardMedia, Button, ButtonBase, Typography} from "@material-ui/core";
+import {Grid, Card, CardActions, CardContent, CardMedia, Button, ButtonBase, Typography} from "@material-ui/core";
 import ThumbUpAltIcon from "@material-ui/icons/ThumbUpAlt";
 import ThumbUpAltOutlined from '@material-ui/icons/ThumbUpAltOutlined';
 import DeleteIcon from "@material-ui/icons/Delete";
@@ -10,6 +10,8 @@ import {useDispatch} from "react-redux";
 import {deletePost, likePost} from "../../../actions/postsAction";
 import Filter from "bad-words";
 import {useHistory} from "react-router-dom";
+import noImg from "../../../images/no-img.png";
+import {confirm} from "react-confirm-box";
 
 const Post = ({post, setCurrentId}) => {
     const classes = useStyles();
@@ -49,15 +51,42 @@ const Post = ({post, setCurrentId}) => {
     };
 
     const openPost = () => {
-        history.push(`/posts/${post._id}`)
+        history.push(`/posts/${post._id}`);
     };
+
+
+
+	const options = {
+		render: (message, onConfirm, onCancel) => {
+		  return (
+			<div>
+				<Card className={classes.popup} style={{padding: "50px"}}>
+					<Typography varient="h1" style={{margin: "7px", fontWeight: "1000", justifyContent: 'center', textAlign: "center"}}>{message}</Typography>
+					<Button color="secondary" size="large" style={{margin: "7px"}} onClick={onConfirm}> Yes </Button>
+					<Button color="primary" size="large"style={{margin: "7px"}} onClick={onCancel}> No </Button>
+				</Card>
+			</div>
+
+		  );
+		}
+	};
+
+	//confirms if you want to delete post
+	const handleDelete = async () => {
+		const result = await confirm("Are you sure?", options);
+
+		if (result) {
+			dispatch(deletePost(post._id));
+			return;
+		}
+	};
 
     return(
         <Card className={classes.card}>
             <ButtonBase className={classes.cardAction} onClick={openPost}>
 
                 {/* Image */}
-                <CardMedia className={classes.media} image={post.selectedFile} title={post.title} />
+                <CardMedia className={classes.media} image={post.selectedFile || noImg} title={post.title} />
 
                 {/* Creator */}
                 <div className={classes.overlay}>
@@ -104,7 +133,7 @@ const Post = ({post, setCurrentId}) => {
 
                 {/* so that only the creator can delete the post */}
                 {(user?.result?.googleId === post?.creator || user?.result?._id === post?.creator) && (
-                    <Button size="small" color="secondary" onClick={() => {dispatch(deletePost(post._id))}}>
+                    <Button size="small" color="secondary" onClick={handleDelete}>
                         <DeleteIcon fontSize="small" />
                         Delete
                     </Button>
