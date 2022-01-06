@@ -1,7 +1,7 @@
 import axios from "axios";
 
 //axios instance
-const API = axios.create({baseURL: "https://first-journey.herokuapp.com"});
+const API = axios.create({baseURL: "http://localhost:5000"});
 
 //middleware
 API.interceptors.request.use((req) => {
@@ -12,7 +12,7 @@ API.interceptors.request.use((req) => {
     return req;
 });
 
-// const url = "https://first-journey.herokuapp.com/posts";
+// const url = "https://first-journey.herokuapp.com";
 
 export const fetchPost = (id) => API.get(`/posts/${id}`);
 export const fetchPosts = (page) => API.get(`/posts?page=${page}`);
@@ -25,3 +25,6 @@ export const likePost = (id) => API.patch(`/posts/${id}/likePost`);
 //authentication end points
 export const signIn = (formData) => API.post("/user/signin", formData);
 export const signUp = (formData) => API.post("/user/signup", formData);
+
+//comment
+export const comment = (value, id) => API.post(`/posts/${id}/commentPost`, {value});

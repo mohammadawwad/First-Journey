@@ -132,4 +132,20 @@ export const likePost = async (req, res) => {
     res.status(200).json(updatedPost);
 }
 
+//comment controller 
+export const commentPost = async (req, res) => {
+    const {id} = req.params;
+    const {value} = req.body;
+
+    const post = await PostMessage.findById(id);
+
+    //adding comments to the posts
+    post.comments.push(value);
+
+    //updates in db
+    const updatedPost = await PostMessage.findByIdAndUpdate(id, post, {new: true});
+
+    res.json(updatedPost);
+}
+
 export default router;
