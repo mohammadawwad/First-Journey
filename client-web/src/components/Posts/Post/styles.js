@@ -23,8 +23,8 @@ export default makeStyles({
   },
   outerCase: { 
     width: "100%",  
-    display: "flex",
-    justifyContent: "center",
+    position: "absolute",
+    left: "0px",
   },
   popup: {
     display: 'flex',
@@ -32,10 +32,14 @@ export default makeStyles({
     justifyContent: 'center',
     textAlign: "center",
     borderRadius: '15px',
-    height: '100px',
-    position: 'relative',  
-    width: "80%",
-    margin: "0 auto",
+    height: "20vh",
+    width: "200px",
+    left: "-80px",
+    right: "0px",
+    marginLeft: "auto",
+    marginRight: "auto",
+    position: "absolute",
+    
   },
   overlay: {
     position: 'absolute',
