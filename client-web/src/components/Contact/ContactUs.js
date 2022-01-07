@@ -26,7 +26,7 @@ const ContactUs = () => {
   return (
 
         <Paper className={classes.paper} elevation={6}>
-            <form autoComplete="off" noValidate className={`${classes.root} ${classes.form}`} onSubmit={sendEmail}>
+            <form autoComplete="off" noValidate className={`${classes.root} ${classes.form}`} ref={form} onSubmit={sendEmail}>
                 <Typography variant="h6" >Contact Us</Typography>
                 <TextField required name="user_name" variant="outlined" label="Name" fullWidth/>
                 <TextField required name="user_email" variant="outlined" label="Email Adress" fullWidth/>
