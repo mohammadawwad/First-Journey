@@ -23,7 +23,7 @@ const App = () => {
           <Route path="/posts/:id" exact component={PostDetails} />
           <Route path="/auth" exact component={() => (!user ? <Auth /> : <Redirect to="/posts" />)} />
           <Route path="/contactus" exact component={ContactUs} />
-          <Route path="/reportpost" exact component={ReportPost} />
+          {/* <Route path="/reportpost" exact component={ReportPost} /> */}
         </Switch>
       </Container>
     </BrowserRouter>

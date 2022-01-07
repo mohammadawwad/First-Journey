@@ -1,7 +1,7 @@
 import axios from "axios";
 
 //axios instance
-const API = axios.create({baseURL: "http://localhost:5000"});
+const API = axios.create({baseURL: "https://first-journey.herokuapp.com"});
 
 //middleware
 API.interceptors.request.use((req) => {

@@ -101,35 +101,38 @@ const PostDetails = () => {
                         <Typography gutterButtom variant="h5" >You Might Also Like: </Typography>
                         <Divider />
 
-                        <div className={classes.recomendedPosts}>
-                            {recommendedPosts.map(({title, message, name, likes, selectedFile, _id}) => (
-                                <div style={{margin: "20px", cursor: "pointer"}} onClick={() => openPost(_id)} key={_id}>
+                        {/* <Grid className={classes.container} container alignItems="stretch" spacing={3} > */}
+                            <div className={classes.recomendedPosts}>
+                                {recommendedPosts.map(({title, message, name, likes, selectedFile, _id}) => (
 
                                     <Grid item xs={10} sm={10} md={4} lg={2}>
-                                        <Card className={classes.miniCard}>
+                                        <div style={{margin: "20px", cursor: "pointer"}} onClick={() => openPost(_id)} key={_id}>
 
-                                            {/* Title */}
-                                            <Typography className={classes.miniTitle} color="textPrimary" varient="h4" gutterBottom>{filter.clean(title)}</Typography>
-                                            
-                                            {/* Creator */}
-                                            <Typography className={classes.miniTitle} varient="h6">{`By: ${name}`}</Typography>
+                                            <Card className={classes.miniCard}>
 
-                                            {/* Body filter.clean(msg) */}
-                                            <CardContent>
-                                                <Typography varient="body1" color="textSecondary">{filter.clean(message)}</Typography>
-                                            </CardContent>
+                                                {/* Title */}
+                                                <Typography className={classes.miniTitle} color="textPrimary" varient="h4" gutterBottom>{filter.clean(title)}</Typography>
+                                                
+                                                {/* Creator */}
+                                                <Typography className={classes.miniTitle} varient="h6">{`By: ${name}`}</Typography>
 
-                                            {/* Like Count */}
-                                            <Typography className={classes.miniTitle} color="textSecondary" gutterBottom variant="body2">Likes: {likes.length}</Typography>
-                                            
-                                            {/* Image */}
-                                            <CardMedia className={classes.miniMedia} image={selectedFile || noImg} title={title} />
+                                                {/* Body filter.clean(msg) */}
+                                                <CardContent>
+                                                    <Typography varient="body1" color="textSecondary">{`${filter.clean(post.message.substring(0,200))}...`}</Typography>
+                                                </CardContent>
 
-                                        </Card>
+                                                {/* Like Count */}
+                                                <Typography className={classes.miniTitle} color="textSecondary" gutterBottom variant="body2">Likes: {likes.length}</Typography>
+                                                
+                                                {/* Image */}
+                                                <CardMedia className={classes.miniMedia} image={selectedFile || noImg} title={title} />
+
+                                            </Card>
+                                        </div>
                                     </Grid>
-                                </div>
-                            ))}
-                        </div>
+                                ))}
+                            </div>
+                        {/* </Grid> */}
                     </div>
                 )}
             </Paper>
