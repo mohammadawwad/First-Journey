@@ -1,4 +1,4 @@
-import React, {useEffect} from 'react';
+import React, {useState, useEffect} from 'react';
 import {Paper, Typography, CircularProgress, Divider, Grid} from "@material-ui/core";
 import {Card, CardActions, CardContent, CardMedia, Button, ButtonBase} from "@material-ui/core";
 import {useDispatch, useSelector} from "react-redux";
@@ -9,6 +9,8 @@ import {getPost, getPostsBySearch} from "../../actions/postsAction";
 import Filter from "bad-words";
 import CommentSection from "./CommentSection";
 import noImg from "../../images/no-img.png";
+import ReportIcon from '@material-ui/icons/Report';
+import ReportPost from "../Contact/ReportPost"
 import Post from "../Posts/Post/Post"
 
 const PostDetails = () => {
@@ -18,6 +20,7 @@ const PostDetails = () => {
     const classes = useStyles();
     const {id} = useParams();
     const filter = new Filter();
+    const [showReport, setShowReport] = useState(false)
 
     //whenever the id of the post changes
     useEffect(() => {
@@ -48,6 +51,19 @@ const PostDetails = () => {
         history.push(`/posts/${_id}`)
     }
 
+    const reportPost = () => {
+        // history.push("/reportPost");
+        if(showReport == false){
+            setShowReport(true);
+        }
+        else{
+            setShowReport(false);
+        }
+    }
+
+    const currentPost = window.location.href;
+    console.log(currentPost)
+
     //opend post wont be in recomended post
     const recommendedPosts = posts.filter(({_id}) => _id != post._id);
 
@@ -67,9 +83,16 @@ const PostDetails = () => {
                         </div>
                         <div className={classes.imageSection}>
                         <img className={classes.media} src={post.selectedFile || noImg} alt={post.title} />
+                        {/* Report Button */}
+                        <Button style={{marginTop: "10px"}} onClick={reportPost}>
+                            <ReportIcon color="secondary" fontSize="large"/>
+                        </Button>
                     </div>
                 </div>
             </Paper>
+
+            
+            { showReport ? <ReportPost postLink={currentPost} /> : null }
         
             {/* Recomended Posts */}
             <Paper style={{padding: '20px', borderRadius: "15px", marginTop: "20px"}} elevation={6}>

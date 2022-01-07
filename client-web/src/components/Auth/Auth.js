@@ -8,6 +8,7 @@ import Icon from "./Icon";
 import {useDispatch} from "react-redux";
 import {useHistory} from "react-router-dom";
 import {signIn, signUp} from "../../actions/authAction";
+import {confirm} from "react-confirm-box";
 
 const initialState = {firstName: "", lastName: "", email: "", password: "", confirmPassword: ""};
 
@@ -18,12 +19,28 @@ const Auth = () => {
     const dispatch = useDispatch();
     const history = useHistory();
     const [formData, setFormData] = useState(initialState);
+    const user = JSON.parse(localStorage.getItem("profile"));
 
 
     const handleChange = (e) => {
         //only changes current input field
         setFormData({...formData, [e.target.name]: e.target.value})
     }
+
+    const options = {
+        render: (message, onConfirm) => {
+          return (
+            <>
+              <h1>{message}</h1>
+              <button onClick={onConfirm}> Ok </button>
+            </>
+          );
+        }
+      };
+
+    const handleLoginError = async () => {
+		const result = await confirm("Invalid Credentials", options);
+	};
 
     const handleSubmit = (e) => {
         e.preventDefault();
@@ -35,7 +52,10 @@ const Auth = () => {
 
         //Sign In
         else{
+
             dispatch(signIn(formData, history));
+            
+
         }
     }
 
@@ -105,7 +125,7 @@ const Auth = () => {
                         {isSignedUp ? "Sign Up" : "Sign In"}
                     </Button>
 
-                    <GoogleLogin
+                    {/* <GoogleLogin
                         clientId="47800095300-ltbv54jmv6mqfd8tpe2909c5ih209a1o.apps.googleusercontent.com"
                         render={(renderProps) => (
                         <Button className={classes.googleButton} color="primary" fullWidth onClick={renderProps.onClick} disabled={renderProps.disabled} startIcon={<Icon />} variant="contained">
@@ -115,7 +135,7 @@ const Auth = () => {
                         onSuccess={googleSuccess}
                         onFailure={googleFailure}
                         cookiePolicy="single_host_origin"
-                    />
+                    /> */}
 
                     <Grid contaienr justify="flex-end">
                         <Grid item>

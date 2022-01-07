@@ -32,13 +32,14 @@ export default makeStyles({
     justifyContent: 'center',
     textAlign: "center",
     borderRadius: '15px',
+    top: "40vh",
     height: "20vh",
     width: "200px",
-    left: "-80px",
+    left: "0px",
     right: "0px",
     marginLeft: "auto",
     marginRight: "auto",
-    position: "absolute",
+    position: "fixed",
     
   },
   overlay: {

@@ -4,7 +4,8 @@ import {Grid, Card, CardActions, CardContent, CardMedia, Button, ButtonBase, Typ
 import ThumbUpAltIcon from "@material-ui/icons/ThumbUpAlt";
 import ThumbUpAltOutlined from '@material-ui/icons/ThumbUpAltOutlined';
 import DeleteIcon from "@material-ui/icons/Delete";
-import MoreHorizIcon from "@material-ui/icons/MoreHoriz"
+import MoreHorizIcon from "@material-ui/icons/MoreHoriz";
+import EditIcon from '@material-ui/icons/Edit';
 import moment from "moment";
 import {useDispatch} from "react-redux";
 import {deletePost, likePost} from "../../../actions/postsAction";
@@ -59,14 +60,13 @@ const Post = ({post, setCurrentId}) => {
 	const options = {
 		render: (message, onConfirm, onCancel) => {
 		  return (
-			<div>
-				<Card className={classes.popup} style={{padding: "50px"}}>
-					<Typography varient="h1" style={{margin: "7px", fontWeight: "1000", justifyContent: 'center', textAlign: "center"}}>{message}</Typography>
-					<Button color="secondary" size="large" style={{margin: "7px"}} onClick={onConfirm}> Yes </Button>
-					<Button color="primary" size="large"style={{margin: "7px"}} onClick={onCancel}> No </Button>
-				</Card>
+			  <div className={classes.outerCase}>
+			<Card className={classes.popup} style={{padding: "50px"}}>
+				<Typography varient="h1" style={{margin: "7px", fontWeight: "1000", justifyContent: 'center', textAlign: "center"}}>{message}</Typography>
+				<Button color="secondary" size="large" style={{margin: "7px"}} onClick={onConfirm}> Yes </Button>
+				<Button color="primary" size="large"style={{margin: "7px"}} onClick={onCancel}> No </Button>
+			</Card>
 			</div>
-
 		  );
 		}
 	};
@@ -90,7 +90,7 @@ const Post = ({post, setCurrentId}) => {
 
                 {/* Creator */}
                 <div className={classes.overlay}>
-                    <Typography varient="h6">{post.name}</Typography>
+                    <Typography varient="h6" >{post.name}</Typography>
                     <Typography varient="body2">{moment(post.createdAt).fromNow()}</Typography>
                 </div>
 
@@ -105,7 +105,7 @@ const Post = ({post, setCurrentId}) => {
                       style={{ color: 'white' }}
                       size="small"
                     >
-                      <MoreHorizIcon fontSize="default" />
+                      <EditIcon fontSize="default" />
                     </Button>
                   </div>
                 )}
@@ -116,11 +116,11 @@ const Post = ({post, setCurrentId}) => {
                 </div>
 
                 {/* Title */}
-                <Typography className={classes.title} varient="h5" gutterBottom>{filter.clean(post.title)}</Typography>
+                <Typography className={classes.title} varient="h5" gutterBottom required>{filter.clean(post.title)}</Typography>
 
                 {/* Body filter.clean(msg) */}
                 <CardContent>
-                    <Typography varient="body2" color="textSecondary" component="p">{filter.clean(post.message)}</Typography>
+                    <Typography varient="body2" color="textSecondary" component="p" required>{`${filter.clean(post.message.substring(0,200))}...`}</Typography>
                 </CardContent>
 
             </ButtonBase>

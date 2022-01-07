@@ -1,11 +1,10 @@
 import React, {useState, useRef} from "react";
-import {Typography, TextField, Button} from "@material-ui/core";
+import {Typography, Avatar, TextField, Button} from "@material-ui/core";
 import {useDispatch} from "react-redux";
 import useStyles from "./styles";
 import {commentPost} from "../../actions/postsAction";
 
 const CommentSection = ({post}) => {
-    console.log(post);
 
     const classes = useStyles();
     const [comments, setComments] = useState(post?.comments);
@@ -45,7 +44,7 @@ const CommentSection = ({post}) => {
                     <div ref={commentsRef} />
                 </div>
 
-                {/* only sallows to comments if user is loged in */}
+                {/* only allows to comments if user is loged in */}
                 {user?.result?.name && (
                     <div style={{width: "40%"}}>
                         <Typography gutterButtom variant="h6">Leave a Comment</Typography>

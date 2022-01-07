@@ -4,6 +4,7 @@ import useStyles from "./styles";
 import {Link, useHistory, useLocation} from "react-router-dom";
 import {useDispatch} from "react-redux";
 import decode from "jwt-decode";
+import logo from "../../images/logo.png";
 
 const Navbar = () => {
 
@@ -39,11 +40,9 @@ const Navbar = () => {
 
     return (
         <AppBar className={classes.appBar} position="static" color="inherit">
-            <div className={classes.brandContainer}>  
-                <Typography className={classes.heading} component={Link} to="/" variant="h2" align="center">First Journey</Typography>
-                {/* <img className={classes.image} src={journey} alt="journey" height="40px"/> */}
-            </div>
-
+            <Link to="/" className={classes.brandContainer}>
+                <img className={classes.image} src={logo} alt="icon" height="100px" />
+            </Link>
             <Toolbar className={classes.toolBar}>
                 {user ? (
                     <div className={classes.profile}>
