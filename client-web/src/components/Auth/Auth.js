@@ -52,10 +52,7 @@ const Auth = () => {
 
         //Sign In
         else{
-
             dispatch(signIn(formData, history));
-            
-
         }
     }
 
@@ -100,7 +97,7 @@ const Auth = () => {
 
                 <Typography variant="h5">{isSignedUp ? "Sign Up" : "Sign In"}</Typography>
 
-                <form className={classes.form} onSubmit={handleSubmit}>
+                <form className={classes.form}>
                     <Grid container spacing={2}>
                         {
                             isSignedUp && (
@@ -111,17 +108,25 @@ const Auth = () => {
                             )
                         }
 
-                        <Input name="email" label="Email Adress" handleChange={handleChange} type="email" />
-                        <Input name="password" label="Password" handleChange={handleChange} type={showPassword ? "text" : "password"} handleShowPassword={handleShowPassword} />
+                        <Input name="email" label="Email Adress (case sensitive)" handleChange={handleChange} type="email" />
+
+                        {
+                            !isSignedUp && (
+                                <Input name="password" label="Password" handleChange={handleChange} type={showPassword ? "text" : "password"} handleShowPassword={handleShowPassword} />
+                            )
+                        }
                         
                         {
                             isSignedUp && (
-                                <Input name="confirmPassword" label="Confirm Password" handleChange={handleChange} type="password" />
+                                <>
+                                    <Input name="password" label="Password (min. 7)"   inputProps={{minLength: 7}} handleChange={handleChange} type={showPassword ? "text" : "password"} handleShowPassword={handleShowPassword} />
+                                    <Input name="confirmPassword" inputProps={{minLength: 7}} label="Confirm Password (min. 7)" handleChange={handleChange} type="password" />
+                                </>
                             )
                         }
                     </Grid>
 
-                    <Button type="submit" fullWidth variant="contained" color="primary" className={classes.submit}>
+                    <Button onClick={handleSubmit} fullWidth variant="contained" color="primary" className={classes.submit}>
                         {isSignedUp ? "Sign Up" : "Sign In"}
                     </Button>
 
@@ -139,9 +144,9 @@ const Auth = () => {
 
                     <Grid contaienr justify="flex-end">
                         <Grid item>
-                            <Button onClick={switchMode}>
+                            <Button onClick={switchMode} fullWidth variant="contained" color="primary" style={{marginTop: "5px"}} className={classes.submit}>
                                 {
-                                    isSignedUp ? "Have an account? Sign In" : "Don't have an account? Sign Up Now"
+                                    isSignedUp ? "Have an account? Sign In" : "Don't have an account? Sign Up" 
                                 }
                             </Button>
                         </Grid>

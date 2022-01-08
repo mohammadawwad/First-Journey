@@ -3,16 +3,18 @@ import emailjs from '@emailjs/browser';
 import {useHistory} from "react-router-dom";
 import {TextField, Button, Typography, Paper, Input, IconButton} from "@material-ui/core";
 import useStyles from "./styles"
+import dotenv from "dotenv";
 
 const ReportPost = (postLink) => {
   const form = useRef();
   const history = useHistory();
   const classes = useStyles();
+  dotenv.config();
 
   const sendReportPost = (e) => {
     e.preventDefault();
 
-    emailjs.sendForm('gmail', 'postReport', form.current, 'user_5kSDfu7vNgvO65gF57lKL')
+    emailjs.sendForm('gmail', 'postReport', form.current, process.env.REACT_APP_REPORT_POST)
       .then((result) => {
           console.log(result.text);
       }, (error) => {

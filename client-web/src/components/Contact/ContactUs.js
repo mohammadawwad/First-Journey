@@ -2,17 +2,19 @@ import React, { useRef } from 'react';
 import emailjs from '@emailjs/browser';
 import {useHistory} from "react-router-dom";
 import {TextField, Button, Typography, Paper, Input, IconButton} from "@material-ui/core";
-import useStyles from "./styles"
+import useStyles from "./styles";
+import dotenv from "dotenv";
 
 const ContactUs = () => {
   const form = useRef();
   const history = useHistory();
   const classes = useStyles();
+  dotenv.config();
 
   const sendEmail = (e) => {
     e.preventDefault();
 
-    emailjs.sendForm('gmail', 'contactUs', form.current, 'user_5kSDfu7vNgvO65gF57lKL')
+    emailjs.sendForm('gmail', 'contactUs', form.current, process.env.REACT_APP_CONTACT_US)
       .then((result) => {
           console.log(result.text);
       }, (error) => {

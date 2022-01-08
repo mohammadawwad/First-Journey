@@ -13,6 +13,7 @@ import Filter from "bad-words";
 import {useHistory} from "react-router-dom";
 import noImg from "../../../images/no-img.png";
 import {confirm} from "react-confirm-box";
+import dotenv from "dotenv";
 
 const Post = ({post, setCurrentId}) => {
     const classes = useStyles();
@@ -20,7 +21,8 @@ const Post = ({post, setCurrentId}) => {
     const user = JSON.parse(localStorage.getItem('profile'));
     const filter = new Filter();  //profanity filter
     const history = useHistory();
-	const [likes, setLikes] = useState(post?.likes);
+	  const [likes, setLikes] = useState(post?.likes);
+    dotenv.config();
 
 	const userId = (user?.result.googleId || user?.result?._id);
 	const hasLikedPost = likes.find((like) => like === userId);
@@ -81,6 +83,8 @@ const Post = ({post, setCurrentId}) => {
 		}
 	};
 
+  console.log(JSON.stringify(process.env.REACT_APP_ADMIN + "   " + user?.result?._id));
+
     return(
         <Card className={classes.card}>
             <ButtonBase className={classes.cardAction} onClick={openPost}>
@@ -131,8 +135,9 @@ const Post = ({post, setCurrentId}) => {
                     <Likes />
                 </Button>
 
+                
                 {/* so that only the creator can delete the post */}
-                {(user?.result?.googleId === post?.creator || user?.result?._id === post?.creator) && (
+                {((user?.result?.googleId === post?.creator) || (user?.result?._id === post?.creator) || (process.env.REACT_APP_ADMIN === user?.result?._id)) && (
                     <Button size="small" color="secondary" onClick={handleDelete}>
                         <DeleteIcon fontSize="small" />
                         Delete
