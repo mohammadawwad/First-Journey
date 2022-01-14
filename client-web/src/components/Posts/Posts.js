@@ -2,7 +2,8 @@ import React from "react";
 import Post from "./Post/Post"
 import useStyles from "./styles";
 import {useSelector} from "react-redux";
-import {Grid, CircularProgress} from "@material-ui/core"
+import {Grid, CircularProgress} from "@material-ui/core";
+import Skeleton from '@material-ui/lab/Skeleton';
 
 
 const Posts = ({setCurrentId}) => {
@@ -15,7 +16,7 @@ const Posts = ({setCurrentId}) => {
     }
     
     return(
-        isLoading ? <CircularProgress /> : (
+        isLoading ? <Skeleton animation="wave" /> : (
             <Grid className={classes.container} container alignItems="stretch" spacing={3}>
                 {
                     posts.map((post) => (
