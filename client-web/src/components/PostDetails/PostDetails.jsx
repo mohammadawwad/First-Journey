@@ -12,6 +12,7 @@ import noImg from "../../images/no-img.png";
 import ReportIcon from '@material-ui/icons/Report';
 import ReportPost from "../Contact/ReportPost"
 import Post from "../Posts/Post/Post"
+import Skeleton from '@material-ui/lab/Skeleton';
 
 const PostDetails = () => {
     const {post, posts, isLoading} = useSelector((state) => state.postsReducers);
@@ -42,7 +43,8 @@ const PostDetails = () => {
     if(isLoading){
         return (
             <Paper elevation={6} className={classes.loadingPaper}>
-                <CircularProgress size="7em"/>
+                {/* <CircularProgress size="7em"/> */}
+                <Skeleton animation="wave" />
             </Paper>
         );
     }
@@ -118,7 +120,7 @@ const PostDetails = () => {
 
                                                 {/* Body filter.clean(msg) */}
                                                 <CardContent>
-                                                    <Typography varient="body1" color="textSecondary">{`${filter.clean(post.message.substring(0,200))}...`}</Typography>
+                                                    <Typography varient="body1" color="textSecondary">{`${filter.clean(message.substring(0,200))}...`}</Typography>
                                                 </CardContent>
 
                                                 {/* Like Count */}

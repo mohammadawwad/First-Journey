@@ -1,2 +1,6 @@
 nodemon - node index.js
 api local host to server
+footer
+recomended posts 
+google auth 
+profile
