@@ -14,7 +14,7 @@ const Navbar = () => {
     const location = useLocation();
     const [user, setUser] = useState(JSON.parse(localStorage.getItem("profile")));
 
-    console.log(user);
+    // console.log(user); for all results
 
     //when location changes set the user
     useEffect(() => {
@@ -46,7 +46,7 @@ const Navbar = () => {
             <Toolbar className={classes.toolBar}>
                 {user ? (
                     <div className={classes.profile}>
-                        <Avatar className={classes.purple} alt={user.result.name} src={user.result.imageUrl}>{user.result?.profilePicture || user.result.name.charAt(0)}</Avatar>
+                        <Avatar className={classes.purple} alt={user.result.name} src={user.result.profilePicture != "" ? user.result.profilePicture : user.result.imageUrl}>{user.result?.profilePicture != "" ? user.result.profilePicture : user.result.name.charAt(0)}</Avatar>
                         <Typography className={classes.userName} variant="h6">{user.result.name}</Typography>
                         <Button variant="contained" className={classes.logout} color="secondary" onClick={logout} >Logout</Button>
                     </div>
