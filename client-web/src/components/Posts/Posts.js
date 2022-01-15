@@ -18,19 +18,21 @@ const Posts = ({setCurrentId}) => {
     return(
         isLoading ?
         
-        ( <Grid className={classes.container} container alignItems="stretch" spacing={3}>
+        (  
+            <Grid className={classes.container} container alignItems="stretch" spacing={3}>
                 {
-                    Array.from(new Array(3)).map(() => (
-                        <>
-                        <Skeleton animation="wave" variant="circular" width={40} height={40} />
-                        <Skeleton animation="wave" width={210} /> 
-                        <Skeleton animation="wave" variant="rectangular" width={210} height={138} />
-                        <Skeleton animation="wave" width={150}/> 
-                        </>
+                    Array.from(new Array(8)).map(() => (
+                        <Grid item xs={12} sm={12} md={6} lg={3}>
+                            <Skeleton animation="wave" variant="circular" width={40} height={40} />
+                            <Skeleton animation="wave" width={250}/> 
+                            <Skeleton animation="wave" variant="rectangular" width={250} height={200} />
+                            <Skeleton animation="wave" width={250}/> 
+                            <Skeleton animation="wave" width={250}/> 
+                            <Skeleton animation="wave" width={150}/> 
+                        </Grid>
                     ))
                 }
             </Grid>
-
         )
 
         

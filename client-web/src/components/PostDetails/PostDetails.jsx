@@ -41,10 +41,18 @@ const PostDetails = () => {
     }
 
     if(isLoading){
-        return (
+        return ( 
             <Paper elevation={6} className={classes.loadingPaper}>
-                {/* <CircularProgress size="7em"/> */}
-                <Skeleton animation="wave" />
+                <div className={classes.card}>
+                    <div className={classes.section}>
+                        <Skeleton animation="wave" width={200}/> 
+                        <Skeleton animation="wave" width={400}/> 
+                        <Skeleton animation="wave" width={400}/> 
+                        <Skeleton animation="wave" variant="rectangular" width={450} height={150} />
+                        <Skeleton animation="wave" width={250}/> 
+                        <Skeleton animation="wave" variant="circular" width={40} height={40} />
+                    </div>
+                </div>
             </Paper>
         );
     }
@@ -82,8 +90,9 @@ const PostDetails = () => {
                         <Divider style={{ margin: '20px 0' }} />
                         <CommentSection post={post} />
                         <Divider style={{ margin: '20px 0' }} />
-                        </div>
-                        <div className={classes.imageSection}>
+                    </div>
+
+                    <div className={classes.imageSection}>
                         <img className={classes.media} src={post.selectedFile || noImg} alt={post.title} />
                         {/* Report Button */}
                         <Button style={{marginTop: "10px"}} onClick={reportPost}>
@@ -97,13 +106,14 @@ const PostDetails = () => {
             { showReport ? <ReportPost postLink={currentPost} /> : null }
         
             {/* Recomended Posts */}
-            <Paper style={{padding: '20px', borderRadius: "15px", marginTop: "20px"}} elevation={6}>
-                {recommendedPosts.length && (
+            
+            {recommendedPosts.length ? (
+                <Paper style={{padding: '20px', borderRadius: "15px", marginTop: "20px"}} elevation={6}>
                     <div className={classes.section}>
                         <Typography gutterButtom variant="h5" >You Might Also Like: </Typography>
                         <Divider />
 
-                        {/* <Grid className={classes.container} container alignItems="stretch" spacing={3} > */}
+                        <Grid className={classes.container} container alignItems="stretch" spacing={3} >
                             <div className={classes.recomendedPosts}>
                                 {recommendedPosts.map(({title, message, name, likes, selectedFile, _id}) => (
 
@@ -134,10 +144,17 @@ const PostDetails = () => {
                                     </Grid>
                                 ))}
                             </div>
-                        {/* </Grid> */}
+                        </Grid>
                     </div>
-                )}
-            </Paper>
+                </Paper>
+            )
+        : 
+            (
+                <Paper style={{padding: '20px', borderRadius: "15px", marginTop: "20px"}} elevation={6}>
+                    <Typography gutterButtom variant="h6" >Check Back Later For Some Recomended Posts</Typography>
+                </Paper>
+            )
+        }
        </>
         
     )

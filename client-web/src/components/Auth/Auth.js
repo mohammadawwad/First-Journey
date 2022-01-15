@@ -8,9 +8,10 @@ import Icon from "./Icon";
 import {useDispatch} from "react-redux";
 import {useHistory} from "react-router-dom";
 import {signIn, signUp} from "../../actions/authAction";
+import FileBase from "react-file-base64";
 import {confirm} from "react-confirm-box";
 
-const initialState = {firstName: "", lastName: "", email: "", password: "", confirmPassword: ""};
+const initialState = {firstName: "", lastName: "", email: "", password: "", confirmPassword: "", profilePicture: ""};
 
 const Auth = () => {
     const classes = useStyles();
@@ -121,6 +122,10 @@ const Auth = () => {
                                 <>
                                     <Input name="password" label="Password (min. 7)"   inputProps={{minLength: 7}} handleChange={handleChange} type={showPassword ? "text" : "password"} handleShowPassword={handleShowPassword} />
                                     <Input name="confirmPassword" inputProps={{minLength: 7}} label="Confirm Password (min. 7)" handleChange={handleChange} type="password" />
+                                    <div className={classes.fileInput}>
+                                        <Typography>Upload Profile Picture</Typography>
+                                        <FileBase type="file" multiple={false} onDone={({base64}) => setFormData({...formData, selectedFile: base64})}/>
+                                    </div>
                                 </>
                             )
                         }
