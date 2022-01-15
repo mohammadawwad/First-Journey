@@ -109,43 +109,37 @@ const PostDetails = () => {
             
             {recommendedPosts.length ? (
                 <Paper style={{padding: '20px', borderRadius: "15px", marginTop: "20px"}} elevation={6}>
-                    <div className={classes.section}>
-                        <Typography gutterButtom variant="h5" >You Might Also Like: </Typography>
-                        <Divider />
+                    <Grid className={classes.container} container alignItems="stretch" spacing={3}>
+                        
+                        {recommendedPosts.map(({title, message, name, likes, selectedFile, _id}) => (
+                            <Grid key={post._id} item xs={12} sm={12} md={6} lg={3}>
+                                
+                                <div style={{margin: "20px", cursor: "pointer"}} onClick={() => openPost(_id)} key={_id}>
+                                    <Card className={classes.miniCard}>
 
-                        <Grid className={classes.container} container alignItems="stretch" spacing={3} >
-                            <div className={classes.recomendedPosts}>
-                                {recommendedPosts.map(({title, message, name, likes, selectedFile, _id}) => (
+                                        {/* Title */}
+                                        <Typography className={classes.miniTitle} color="textPrimary" varient="h4" gutterBottom>{filter.clean(title)}</Typography>
+                                        
+                                        {/* Creator */}
+                                        <Typography className={classes.miniTitle} varient="h6">{`By: ${name}`}</Typography>
 
-                                    <Grid item xs={10} sm={10} md={4} lg={2}>
-                                        <div style={{margin: "20px", cursor: "pointer"}} onClick={() => openPost(_id)} key={_id}>
+                                        {/* Body filter.clean(msg) */}
+                                        <CardContent>
+                                            <Typography varient="body1" color="textSecondary">{`${filter.clean(message.substring(0,200))}...`}</Typography>
+                                        </CardContent>
 
-                                            <Card className={classes.miniCard}>
+                                        {/* Like Count */}
+                                        <Typography className={classes.miniTitle} color="textSecondary" gutterBottom variant="body2">Likes: {likes.length}</Typography>
+                                        
+                                        {/* Image */}
+                                        <CardMedia className={classes.miniMedia} image={selectedFile || noImg} title={title} />
 
-                                                {/* Title */}
-                                                <Typography className={classes.miniTitle} color="textPrimary" varient="h4" gutterBottom>{filter.clean(title)}</Typography>
-                                                
-                                                {/* Creator */}
-                                                <Typography className={classes.miniTitle} varient="h6">{`By: ${name}`}</Typography>
-
-                                                {/* Body filter.clean(msg) */}
-                                                <CardContent>
-                                                    <Typography varient="body1" color="textSecondary">{`${filter.clean(message.substring(0,200))}...`}</Typography>
-                                                </CardContent>
-
-                                                {/* Like Count */}
-                                                <Typography className={classes.miniTitle} color="textSecondary" gutterBottom variant="body2">Likes: {likes.length}</Typography>
-                                                
-                                                {/* Image */}
-                                                <CardMedia className={classes.miniMedia} image={selectedFile || noImg} title={title} />
-
-                                            </Card>
-                                        </div>
-                                    </Grid>
-                                ))}
-                            </div>
-                        </Grid>
-                    </div>
+                                    </Card>
+                                </div>
+                            </Grid>
+                        ))}
+                        
+                    </Grid>
                 </Paper>
             )
         : 

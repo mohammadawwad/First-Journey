@@ -23,7 +23,7 @@ const Posts = ({setCurrentId}) => {
                 {
                     Array.from(new Array(8)).map(() => (
                         <Grid item xs={12} sm={12} md={6} lg={3}>
-                            <Skeleton animation="wave" variant="circular" width={40} height={40} />
+                            <Skeleton animation="wave" variant="circle" width={40} height={40} />
                             <Skeleton animation="wave" width={250}/> 
                             <Skeleton animation="wave" variant="rectangular" width={250} height={200} />
                             <Skeleton animation="wave" width={250}/> 

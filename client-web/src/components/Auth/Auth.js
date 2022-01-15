@@ -123,8 +123,8 @@ const Auth = () => {
                                     <Input name="password" label="Password (min. 7)"   inputProps={{minLength: 7}} handleChange={handleChange} type={showPassword ? "text" : "password"} handleShowPassword={handleShowPassword} />
                                     <Input name="confirmPassword" inputProps={{minLength: 7}} label="Confirm Password (min. 7)" handleChange={handleChange} type="password" />
                                     <div className={classes.fileInput}>
-                                        <Typography>Upload Profile Picture</Typography>
-                                        <FileBase type="file" multiple={false} onDone={({base64}) => setFormData({...formData, selectedFile: base64})}/>
+                                        <Typography varient="body2" color="primary" style={{marginLeft: "10px"}}>Upload Profile Picture</Typography>
+                                        <FileBase type="file" multiple={false} onDone={({base64}) => setFormData({...formData, profilePicture: base64})}/>
                                     </div>
                                 </>
                             )

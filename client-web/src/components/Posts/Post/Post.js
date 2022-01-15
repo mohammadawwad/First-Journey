@@ -83,7 +83,6 @@ const Post = ({post, setCurrentId}) => {
 		}
 	};
 
-  console.log(JSON.stringify(process.env.REACT_APP_ADMIN + "   " + user?.result?._id));
 
     return(
         <Card className={classes.card}>

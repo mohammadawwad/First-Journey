@@ -69,6 +69,7 @@ const Form = ({currentId, setCurrentId}) => {
                 <TextField name="tags" variant="outlined" label="Tags ','" fullWidth value={postData.tags} onChange={(e) => setPostData({...postData, tags: e.target.value.split(',')})} />
 
                 <div className={classes.fileInput}>
+                    <Typography varient="body2" color="primary" style={{marginLeft: "10px"}}>Upload A Picture</Typography>
                     <IconButton color="primary" aria-label="upload picture" component="span">
                         {/* <PhotoCamera size="Large"  /> */}
                     <FileBase type="file" multiple={false} onDone={({base64}) => setPostData({...postData, selectedFile: base64})}/>

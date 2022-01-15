@@ -34,7 +34,7 @@ export const signIn = async (req, res) => {
 }
 
 export const signUp = async (req, res) => {
-    const {firstName, lastName, email, password, confirmPassword} = req.body;
+    const {firstName, lastName, email, password, confirmPassword, profilePicture} = req.body;
 
     try{
         //checks if user exists
