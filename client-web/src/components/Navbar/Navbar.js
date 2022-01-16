@@ -7,6 +7,7 @@ import decode from "jwt-decode";
 import logo from "../../images/logo.png";
 import SettingsIcon from '@material-ui/icons/Settings';
 // import LogoutIcon from '@mui/icons-material/Logout';
+import ArrowDropDownIcon from '@material-ui/icons/ArrowDropDown';
 
 const Navbar = () => {
 
@@ -78,6 +79,7 @@ const Navbar = () => {
                                 aria-expanded={open ? 'true' : undefined}
                             >
                                 <Avatar className={classes.purple} alt={user.result.name} src={user.result.profilePicture != "" ? user.result.profilePicture : user.result.imageUrl}>{user.result?.profilePicture != "" ? user.result.profilePicture : user.result.name.charAt(0)}</Avatar>
+                                <ArrowDropDownIcon />
                             </IconButton>                            
                         </Tooltip>
                         </Box>
