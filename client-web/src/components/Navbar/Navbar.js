@@ -1,11 +1,12 @@
 import React, {useState, useEffect} from 'react'
-import {AppBar, Avatar, Typography, Toolbar, Button, Menu, MenuItem, Fade} from "@material-ui/core";
+import {AppBar, Avatar, Typography, Toolbar, Button, ListItemIcon, Menu, Divider, Box, MenuItem, Fade, Tooltip, IconButton} from "@material-ui/core";
 import useStyles from "./styles";
 import {Link, useHistory, useLocation} from "react-router-dom";
 import {useDispatch} from "react-redux";
 import decode from "jwt-decode";
 import logo from "../../images/logo.png";
 import SettingsIcon from '@material-ui/icons/Settings';
+// import LogoutIcon from '@mui/icons-material/Logout';
 
 const Navbar = () => {
 
@@ -43,6 +44,9 @@ const Navbar = () => {
 
 
 
+    
+
+
     const [anchorEl, setAnchorEl] = React.useState(null);
     const open = Boolean(anchorEl);
     const handleClick = (event) => {
@@ -61,38 +65,102 @@ const Navbar = () => {
 
                 {user ? (
                     <div className={classes.profile}>
-                        <Avatar className={classes.purple} alt={user.result.name} src={user.result.profilePicture != "" ? user.result.profilePicture : user.result.imageUrl}>{user.result?.profilePicture != "" ? user.result.profilePicture : user.result.name.charAt(0)}</Avatar>
-                        <Typography className={classes.userName} variant="h6">{user.result.name}</Typography>
                         
-                        {/* User dashboard setting */}
-                        <Button component={Link} 
-                            to="/auth" 
-                            variant="contained" 
-                            color="primary"        
-                            id="fade-button"
-                            aria-controls={open ? 'fade-menu' : undefined}
-                            aria-haspopup="true"
-                            aria-expanded={open ? 'true' : undefined}
-                            onClick={handleClick}
-                        >
-                            <SettingsIcon />
-                        </Button>
+                        {/* Profile Picture*/}
+                        <Box sx={{ display: 'flex', alignItems: 'center', textAlign: 'center' }}>
+                        <Tooltip title="Account settings">
+                            <IconButton
+                                onClick={handleClick}
+                                size="small"
+                                sx={{ ml: 2 }}
+                                aria-controls={open ? 'account-menu' : undefined}
+                                aria-haspopup="true"
+                                aria-expanded={open ? 'true' : undefined}
+                            >
+                                <Avatar className={classes.purple} alt={user.result.name} src={user.result.profilePicture != "" ? user.result.profilePicture : user.result.imageUrl}>{user.result?.profilePicture != "" ? user.result.profilePicture : user.result.name.charAt(0)}</Avatar>
+                            </IconButton>                            
+                        </Tooltip>
+                        </Box>
+
+                        {/* Name */}
+                        <Typography className={classes.userName} variant="h6">{user.result.name}</Typography>
+
+
 
                         <Menu
-                            id="fade-menu"
-                            MenuListProps={{
-                            'aria-labelledby': 'fade-button',
-                            }}
                             anchorEl={anchorEl}
+                            id="account-menu"
                             open={open}
                             onClose={handleClose}
-                            TransitionComponent={Fade}
+                            onClick={handleClose}
+                            PaperProps={{
+                            elevation: 0,
+                            sx: {
+                                overflow: 'visible',
+                                filter: 'drop-shadow(0px 2px 8px rgba(0,0,0,0.32))',
+                                mt: 1.5,
+                                '& .MuiAvatar-root': {
+                                width: 26,
+                                height: 26,
+                                ml: -0.5,
+                                mr: 1,
+                                },
+                                '&:before': {
+                                content: '""',
+                                display: 'block',
+                                position: 'absolute',
+                                top: 30,
+                                right: 14,
+                                width: 10,
+                                height: 10,
+                                bgcolor: 'background.paper',
+                                transform: 'translateY(-50%) rotate(45deg)',
+                                zIndex: 0,
+                                },
+                            },
+                            }}
+                            transformOrigin={{ horizontal: 'right', vertical: 'top' }}
+                            anchorOrigin={{ horizontal: 'right', vertical: 'bottom' }}
                         >
-                        
-                            <MenuItem onClick={handleClose}>Profile</MenuItem>
-                            <MenuItem onClick={handleClose}>My account</MenuItem>
-                            <MenuItem onClick={logout}>Logout</MenuItem>
+                            <MenuItem>
+                                <ListItemIcon>
+                                    <Avatar /> 
+                                </ListItemIcon>
+
+                                My account
+                            </MenuItem>
+
+                            <Divider />
+
+                            <MenuItem>
+                                <ListItemIcon>
+                                    <SettingsIcon fontSize="small" />
+                                </ListItemIcon>
+                                
+                                Settings
+                            </MenuItem>
+
+                            <MenuItem onClick={logout}>
+                                <ListItemIcon>
+                                    {/* <LogoutIcon fontSize="small" /> */}
+                                </ListItemIcon>
+
+                                Logout
+                            </MenuItem>
                         </Menu>
+
+
+
+
+
+
+
+
+
+
+
+
+
                         {/* <Button variant="contained" className={classes.logout} color="secondary" onClick={logout} >Logout</Button> */}
                     </div>
                 ) : (
