@@ -109,6 +109,9 @@ const PostDetails = () => {
             
             {recommendedPosts.length ? (
                 <Paper style={{padding: '20px', borderRadius: "15px", marginTop: "20px"}} elevation={6}>
+                    <Typography gutterButtom variant="h5" >You Might Also Like: </Typography>
+                    <Divider />
+                    
                     <Grid className={classes.container} container alignItems="stretch" spacing={3}>
                         
                         {recommendedPosts.map(({title, message, name, likes, selectedFile, _id}) => (
