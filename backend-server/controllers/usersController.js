@@ -53,7 +53,7 @@ export const signUp = async (req, res) => {
         const hashedPassword = await bcrypt.hash(password, 12);
         
         //creating user
-        const result = await UserModel.create({email, password: hashedPassword, name: `${firstName} ${lastName}`, profilePicture});
+        const result = await UserModel.create({email, password: hashedPassword, fullName: `${firstName} ${lastName}`, profilePicture});
 
         //All is correct and now create a jwt token
         const token = jwt.sign({email: result.email, id: result._id}, "test", {expiresIn: "1h"});

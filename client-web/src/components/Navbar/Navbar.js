@@ -56,6 +56,9 @@ const Navbar = () => {
     const handleClose = () => {
       setAnchorEl(null);
     };
+    const openSettings = () => {
+        history.push(`/settings`);
+    };
 
     return (
         <AppBar className={classes.appBar} position="static" color="inherit">
@@ -134,12 +137,12 @@ const Navbar = () => {
 
                             <Divider />
 
-                            <MenuItem>
+                            <MenuItem onClick={openSettings}>
                                 <ListItemIcon>
                                     <SettingsIcon fontSize="small" />
                                 </ListItemIcon>
                                 
-                                Settings
+                                Profile Settings
                             </MenuItem>
 
                             <MenuItem onClick={logout}>
