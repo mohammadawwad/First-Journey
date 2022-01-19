@@ -1,6 +1,27 @@
+--build reminders--
 nodemon - node index.js
 api local host to server
-footer
-recomended posts 
-google auth 
-profile
+
+
+
+--footer--
+links 
+
+
+--google auth---
+fix or remove
+
+
+
+
+--profile settings--
+inputprops inputjs
+update backend
+notifications
+
+
+--acount--
+list of all your posts
+
+-signup/lognin-- 
+show errors

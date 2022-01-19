@@ -2,7 +2,7 @@ import React, {useState} from "react";
 import {useSelector} from "react-redux";
 import Skeleton from '@material-ui/lab/Skeleton';
 import LockOutlinedIcon from "@material-ui/icons/LockOutlined";
-import {Avatar, Button, Paper, Grid, Typography, Container, TextField} from "@material-ui/core";
+import {Avatar, Button, Paper, Grid, Typography, Container, Divider} from "@material-ui/core";
 import useStyles from "./styles";
 import Input from "../../Auth/Input";
 import Icon from "../../Auth/Icon";
@@ -20,12 +20,13 @@ const UserSettings = () => {
     
     var firstName = user?.result.name.split(' ').slice(0, -1).join(' ');
     var lastName = user?.result.name.split(' ').slice(-1).join(' ');
-    const initialState = {firstName: firstName, lastName: lastName, email: user?.result.email, password: "", confirmPassword: "", profilePicture: user?.result.profilePicture};
+    const initialState = {firstName: firstName, lastName: lastName, email: user?.result.email, password: null, confirmPassword: null, profilePicture: user?.result.profilePicture};
 
     // console.log(initialState);
 
     const classes = useStyles();
-    const [isSignedUp, setIsSignedUp] = useState(false)
+    const [isSignedUp, setIsSignedUp] = useState(false);
+    const [isEditable, setIsEditable] = useState(false);
     const [showPassword, setShowPassword] = useState(false);
     const dispatch = useDispatch();
     const history = useHistory();
@@ -45,14 +46,16 @@ const UserSettings = () => {
         console.log(formData)
     }
 
+
+    const showEditPassword = () => {
+        setIsEditable(true);
+    }
+
+
     const handleShowPassword = () => {
         setShowPassword((prevShowPassword) => !prevShowPassword);
     }
 
-    const switchMode = () => {
-        setIsSignedUp((prevIsSignedUp) => !prevIsSignedUp);
-        setShowPassword(false);
-    }
     
     return(
         // isLoading ?
@@ -82,16 +85,32 @@ const UserSettings = () => {
 
                 <form className={classes.form}>
                     <Grid container spacing={2}>
-                        <Input name="firstName" label="Edit First Name" handleChange={handleChange} autoFocus half  />
-                        <Input name="lastName" label="Edit Last Name" handleChange={handleChange} half />
-                        <Input name="email" label="Edit Email Adress (case sensitive)" handleChange={handleChange} type="email" />
-                        {/* <Input name="password" label="Edit Password (min. 7)"   inputProps={{minLength: 7}} handleChange={handleChange} type={showPassword ? "text" : "password"} handleShowPassword={handleShowPassword} /> */}
-                        {/* <Input name="confirmPassword" inputProps={{minLength: 7}} label="Confirm Password (min. 7)" handleChange={handleChange} type="password" /> */}
-                        <div className={classes.fileInput}>
-                            <Typography varient="body2" color="primary" style={{marginLeft: "10px"}}>Update Profile Picture</Typography>
-                            <FileBase type="file" multiple={false} onDone={({base64}) => setFormData({...formData, profilePicture: base64})}/>
-                        </div>
+                        <Input name="firstName" label="Edit First Name" value={initialState.firstName} handleChange={handleChange} autoFocus half  />
+                        <Input name="lastName" label="Edit Last Name" value={initialState.lastName} handleChange={handleChange} half />
+                        <Input name="email" label="Edit Email Adress (case sensitive)" value={initialState.email} handleChange={handleChange} type="email" />
                     </Grid>
+
+                                            
+                    <Divider style={{ margin: '20px 0' }}/>
+
+                    <div className={classes.fileInput} style={{margin: "10px"}}>
+                        <Typography varient="body2" color="primary" >Update Profile Picture</Typography>
+                        <FileBase type="file" multiple={false} value={initialState.profilePicture} onDone={({base64}) => setFormData({...formData, profilePicture: base64})}/>
+                        <Avatar className={classes.purple} style={{marginTop: "10px"}}alt={user.result.name} src={user.result.profilePicture != "" ? user.result.profilePicture : user.result.imageUrl}>{user.result?.profilePicture != "" ? user.result.profilePicture : user.result.name.charAt(0)}</Avatar>
+                    </div>
+                    
+                    <Button onClick={showEditPassword} fullWidth variant="contained" color="warning" className={classes.submit}>
+                        Edit Pasword
+                    </Button>
+
+                    {   
+                        isEditable && (
+                            <>                        
+                                <Input name="password" label="Edit Password (min. 7)"   inputProps={{minLength: 7}} value={initialState.password} handleChange={handleChange} type={showPassword ? "text" : "password"} handleShowPassword={handleShowPassword} />
+                                <Input name="confirmPassword" inputProps={{minLength: 7}} label="Confirm New Password (min. 7)" value={initialState.confirmPassword} handleChange={handleChange} type="password" />
+                            </>
+                        )
+                    }
 
                     <Button onClick={handleSubmit} fullWidth variant="contained" color="primary" className={classes.submit}>
                         Update
