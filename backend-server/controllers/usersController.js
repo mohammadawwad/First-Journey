@@ -66,3 +66,56 @@ export const signUp = async (req, res) => {
         res.status(500).json({message: "Something went wrong"});
     }
 }
+
+
+export const updateCredentials = async (req, res) => {
+    const {firstName, lastName, email, password, confirmPassword, profilePicture} = req.body;
+    // const {id} = req.params;
+
+    try{
+        const result = null;
+        //checks if user exists
+        const existingUser = await UserModel.findOne({email});
+
+        if(existingUser){ 
+            return res.status(404).json({message: "User already exist"});
+        }
+
+        //changing all credentials
+        if(password != null){
+            //password confirmation
+            if(password != confirmPassword){
+                return res.status(404).json({message: "Passwords don't match"});
+            }
+
+                
+            //hashing passwords
+            const hashedPassword = await bcrypt.hash(password, 12);
+
+            //creating user NEED TO UPDATE USER HERE INSTEAD
+            result = await UserModel.findOneAndUpdate({email, password: hashedPassword, fullName: `${firstName} ${lastName}`, profilePicture});
+
+        }
+        else{
+            //without password
+            result = await UserModel.findOneAndUpdate({email, password: hashedPassword, fullName: `${firstName} ${lastName}`, profilePicture});
+        }
+
+
+
+
+
+        
+
+        //All is correct and now create a jwt token
+        const token = jwt.sign({email: result.email, id: result._id}, "test", {expiresIn: "1h"});
+
+        //return
+        res.status(200).json({result: result, token});
+
+    } catch (error) {
+        console.log(error);
+        res.status(500).json({message: "Something went wrong"});
+    }
+}
+

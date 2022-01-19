@@ -8,19 +8,19 @@ import Input from "../../Auth/Input";
 import Icon from "../../Auth/Icon";
 import {useDispatch} from "react-redux";
 import {useHistory} from "react-router-dom";
-import {signIn, signUp} from "../../../actions/authAction";
+import {updateCredentials} from "../../../actions/authAction";
 import FileBase from "react-file-base64";
 import {confirm} from "react-confirm-box";
 
 
+const user = JSON.parse(localStorage.getItem("profile"));
+var firstName = user?.result.name.split(' ').slice(0, -1).join(' ');
+var lastName = user?.result.name.split(' ').slice(-1).join(' ');
+const initialState = {firstName: firstName, lastName: lastName, email: user?.result.email, password: null, confirmPassword: null, profilePicture: user?.result.profilePicture};
+
+
 const UserSettings = () => {
     
-    const user = JSON.parse(localStorage.getItem("profile"));
-
-    
-    var firstName = user?.result.name.split(' ').slice(0, -1).join(' ');
-    var lastName = user?.result.name.split(' ').slice(-1).join(' ');
-    const initialState = {firstName: firstName, lastName: lastName, email: user?.result.email, password: null, confirmPassword: null, profilePicture: user?.result.profilePicture};
 
     // console.log(initialState);
 
@@ -31,12 +31,14 @@ const UserSettings = () => {
     const dispatch = useDispatch();
     const history = useHistory();
     const [formData, setFormData] = useState(initialState);
+    
 
 
 
     const handleChange = (e) => {
         //only changes current input field
         setFormData({...formData, [e.target.name]: e.target.value});
+        console.log(formData);
 
     }
 
@@ -44,6 +46,7 @@ const UserSettings = () => {
         e.preventDefault();
 
         console.log(formData)
+        dispatch(updateCredentials(formData, history));
     }
 
 
@@ -106,8 +109,9 @@ const UserSettings = () => {
                     {   
                         isEditable && (
                             <>                        
-                                <Input name="password" label="Edit Password (min. 7)"   inputProps={{minLength: 7}} value={initialState.password} handleChange={handleChange} type={showPassword ? "text" : "password"} handleShowPassword={handleShowPassword} />
-                                <Input name="confirmPassword" inputProps={{minLength: 7}} label="Confirm New Password (min. 7)" value={initialState.confirmPassword} handleChange={handleChange} type="password" />
+                                <Input name="password" label="Edit Password (min. 7)"   inputProps={{minLength: 7}} value={initialState.password} handleChange={handleChange} type={showPassword ? "text" : "password"} handleShowPassword={handleShowPassword} style={{marginBottom: "500Spx"}}/>
+                                <div style={{marginBottom: "10px"}}></div>
+                                <Input name="confirmPassword" inputProps={{minLength: 7}} label="Confirm New Password (min. 7)" value={initialState.confirmPassword} handleChange={handleChange} type="password" style={{marginTop: "50px"}} />
                             </>
                         )
                     }
