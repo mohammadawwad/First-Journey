@@ -21,7 +21,12 @@ notifications
 
 
 --acount--
-list of all your posts
+large avatar
+list of all your posts thatt are editable
+
+--home-- 
+search button
++ button to create posts
 
 -signup/lognin-- 
 show errors
