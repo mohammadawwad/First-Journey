@@ -12,7 +12,8 @@ links
 fix or remove
 
 
-
+--login sign up error--
+show dialog if erorr
 
 --profile settings--
 inputprops inputjs
